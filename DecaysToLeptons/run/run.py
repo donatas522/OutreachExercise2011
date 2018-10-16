@@ -36,7 +36,7 @@ analyzer.declareHistos()
 for sample in sources:
     # maxEv defines the maximum number of events to analyze
     # set it to -1 to analyze all available events; 
-    analyzer.processSample(sample, maxEv=100)
+    analyzer.processSample(sample, maxEv=100000)
 
 
 analyzer.makeAllPlots()
