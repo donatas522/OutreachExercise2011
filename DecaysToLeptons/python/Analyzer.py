@@ -319,7 +319,7 @@ class Analyzer (object):
         canvas.Update()
 
         canvas.SaveAs(histogram+".png")          
-       
+        canvas.SaveAs(histogram+".root")
         return canvas
 
     def makeAllPlots(self):
