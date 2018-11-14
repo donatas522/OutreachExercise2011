@@ -191,7 +191,7 @@ class TwoLeptonAnalyzer(Analyzer):
         #####TWO LEPTON CANDIDATES
 
         # Now check if there are at least two leptons:
-        box.leptons = set(box.selectedMuons + box.selectedElectrons)
+        box.leptons = set(box.selectedMuons)
         if len(box.leptons) < 2:
             return False
 
