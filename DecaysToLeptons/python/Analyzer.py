@@ -121,10 +121,10 @@ class Analyzer (object):
     def readCollections(self, event, box, isFake=False):
         event.getByLabel('offlinePrimaryVertices', self.vertexHandle)
         event.getByLabel('patMuons', self.muonHandle)
-        event.getByLabel('patElectrons', self.electronHandle)
+        #event.getByLabel('patElectrons', self.electronHandle)
 
         box.muons = self.muonHandle.product()
-        box.electrons = self.electronHandle.product()
+        #box.electrons = self.electronHandle.product()
         box.vertex = self.vertexHandle.product()[0]
 
         #first select muons and electrons
