@@ -128,6 +128,7 @@ class Analyzer (object):
         box.vertex = self.vertexHandle.product()[0]
 
         #first select muons and electrons
+        #we need only muons
         box.selectedMuons = []
         for mu in box.muons:
             if mu.pt() < 5 or abs(mu.eta()) > 2.4:
@@ -137,7 +138,7 @@ class Analyzer (object):
                     box.selectedMuons.append(mu)
             except ZeroDivisionError:
                 continue
-
+        """
         box.selectedElectrons = []
         for ele in box.electrons:
             if ele.pt() < 5 or abs(ele.eta()) > 2.5:
@@ -147,6 +148,7 @@ class Analyzer (object):
                     box.selectedElectrons.append(ele)
             except ZeroDivisionError:
                 continue
+        """
 
     def exportData(self):
         f = open('data.json', 'w')
