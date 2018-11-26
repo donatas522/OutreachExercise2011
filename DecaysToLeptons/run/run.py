@@ -40,6 +40,7 @@ for sample in sources:
 
 
 analyzer.makeAllPlots()
+analyzer.exportData()
 
 # uncommet line below to export selected data to a json file
 #analyzer.exportData()
