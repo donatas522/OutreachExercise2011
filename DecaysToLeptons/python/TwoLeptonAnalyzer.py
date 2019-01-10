@@ -215,11 +215,13 @@ class TwoLeptonAnalyzer(Analyzer):
 
         ###ADD YOUR HISTOGRAMS AFTER THIS LINE AS AbOVE#####
         self.declareHisto('massZ', 30, 60, 120, "m_{2l} [GeV]")
+        self.declareHisto('pt', 30, 3, max, "p_{T} [GeV]") #minimum 3pt, because we skip all muons with pt <5
 
     def fillHistos(self, box, sample, weight=1):
         super(TwoLeptonAnalyzer, self).fillHistos(box, sample, weight)
 
         self.fillHisto('massZ', sample, box.Z.l1.mass(), weight)
+        self.fillHisto('pt', sample, box.Z.l1.pt(), weight)
 
     def addEvent(self, box):
         self.data.append(box.Z.mass())
