@@ -326,3 +326,26 @@ class Analyzer (object):
 
     def makeAllPlots(self):
         return [self.makePlot(h) for h in self.histograms['data']]
+        
+    def stackHistos(self):
+		#tuscia hist gaunasi
+		#https://root-forum.cern.ch/t/thstack-and-pyroot-problem/6520
+		#https://root.cern.ch/root/html528/THStack.html
+		#https://root.cern.ch/root/htmldoc/guides/users-guide/Histograms.html#histogram-stacks
+		
+		stackedHistos = ROOT.THStack("hs", "test stacked histograms")
+		for h in self.histograms['data']:
+			print(type(h))
+			#ROOT.gROOT.cd()
+			hnew = self.histograms['data'][h].Clone()
+			hnew.SetFillColor(4)
+			stackedHistos.Add(hnew)
+		
+		stackedHistos.ls()
+		c2 = ROOT.TCanvas('c2','test',10,10,800,600)
+		c2.cd()
+		stackedHistos.Draw("nostack")
+		return c2
+		
+		
+        
