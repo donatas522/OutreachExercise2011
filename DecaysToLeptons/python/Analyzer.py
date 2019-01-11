@@ -333,18 +333,24 @@ class Analyzer (object):
 		#https://root.cern.ch/root/html528/THStack.html
 		#https://root.cern.ch/root/htmldoc/guides/users-guide/Histograms.html#histogram-stacks
 		
-		stackedHistos = ROOT.THStack("hs", "test stacked histograms")
+		stackedHistos = ROOT.THStack("hs", "test")
 		for h in self.histograms['data']:
 			print(type(h))
-			#ROOT.gROOT.cd()
+			ROOT.gROOT.cd()
 			hnew = self.histograms['data'][h].Clone()
 			hnew.SetFillColor(4)
+			hnew.SetLineWidth(2)
 			stackedHistos.Add(hnew)
-		
+					
 		stackedHistos.ls()
-		c2 = ROOT.TCanvas('c2','test',10,10,800,600)
+		c2 = ROOT.TCanvas()
+		ROOT.SetOwnership(c2, False)
 		c2.cd()
+		c2.Update()
 		stackedHistos.Draw("nostack")
+		c2.Modified()
+		c2.Update()
+		c2.SaveAs("thstack.root")
 		return c2
 		
 		
