@@ -38,9 +38,9 @@ for sample in sources:
     # set it to -1 to analyze all available events; 
     analyzer.processSample(sample, maxEv=1000)
 
-
+#canvas2 = analyzer.stackHistos()
 canvas1 = analyzer.makeAllPlots()
-canvas2 = analyzer.stackHistos()
+analyzer.exportHistos()
 #analyzer.exportData()
 
 # uncommet line below to export selected data to a json file
