@@ -321,37 +321,74 @@ class Analyzer (object):
         canvas.Update()
 
         canvas.SaveAs(histogram+".png")          
-        canvas.SaveAs(histogram+".root")
+        canvas.SaveAs(histogram+"_canvas.root")
         return canvas
 
     def makeAllPlots(self):
         return [self.makePlot(h) for h in self.histograms['data']]
-        
+	
     def stackHistos(self):
-		#tuscia hist gaunasi
-		#https://root-forum.cern.ch/t/thstack-and-pyroot-problem/6520
-		#https://root.cern.ch/root/html528/THStack.html
-		#https://root.cern.ch/root/htmldoc/guides/users-guide/Histograms.html#histogram-stacks
-		
-		stackedHistos = ROOT.THStack("hs", "test")
-		for h in self.histograms['data']:
-			print(type(h))
+        #tuscia hist gaunasi
+        #https://root-forum.cern.ch/t/thstack-and-pyroot-problem/6520
+        #https://root.cern.ch/root/html528/THStack.html
+        #https://root.cern.ch/root/htmldoc/guides/users-guide/Histograms.html#histogram-stacks
+        col = 1
+        c2 = ROOT.TCanvas()
+        ROOT.SetOwnership(c2, False)
+        c2.cd()
+        c2.Range(-68.75, -7.5, 856.25, 42.5)
+        c2.SetFillColor(0)
+        c2.SetBorderMode(0)
+	c2.SetBorderSize(2)
+	c2.SetTickx(1)
+	c2.SetTicky(1)
+	c2.SetLeftMargin(0.15)
+	c2.SetRightMargin(0.05)
+	c2.SetTopMargin(0.05)
+	c2.SetBottomMargin(0.15)
+	c2.SetFrameFillStyle(0)
+	c2.SetFrameBorderMode(0)
+	c2.SetFrameFillStyle(0)
+	c2.SetFrameBorderMode(0)
+	c2.cd()
+	legend = ROOT.TLegend(0.74, 0.84, 0.94, 0.94, "", "brNDC")
+	legend.SetBorderSize(0)
+	legend.SetLineColor(1)
+	legend.SetLineStyle(1)
+	legend.SetLineWidth(1)
+	legend.SetFillColor(0)
+	legend.SetFillStyle(0)
+	legend.SetTextFont(42)
+	stackedHistos = ROOT.THStack("hs", "test")
+	for h in self.histograms['data']:
+		print(type(h))
+		if(h[0] == 'p'):
+			
 			ROOT.gROOT.cd()
 			hnew = self.histograms['data'][h].Clone()
-			hnew.SetFillColor(4)
+			hnew.SetFillColor(col)
 			hnew.SetLineWidth(2)
 			stackedHistos.Add(hnew)
-					
-		stackedHistos.ls()
-		c2 = ROOT.TCanvas()
-		ROOT.SetOwnership(c2, False)
-		c2.cd()
-		c2.Update()
-		stackedHistos.Draw("nostack")
-		c2.Modified()
-		c2.Update()
-		c2.SaveAs("thstack.root")
-		return c2
+			legend.AddEntry(self.histograms['data'][h], h, "p")
+			legend.Draw()
+			col = col + 1
 		
-		
+	stackedHistos.ls()
+	c2.Update()
+	stackedHistos.Draw()
+	c2.Modified()
+	c2.Update()
+	c2.SaveAs("thstack_canvas.root")
+	return c2
+	
+    def exportHistos(self):
+        for h in self.histograms['data']:
+		print(type(h))
+                ROOT.gROOT.cd()
+		hnew = self.histograms['data'][h].Clone()
+                f = ROOT.TFile(h+".root", "RECREATE")
+                hnew.Write()
+                f.Close()
+
+        return
         
