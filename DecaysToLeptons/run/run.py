@@ -20,7 +20,7 @@
 import ROOT
 ROOT.gROOT.ProcessLine(".x tdrstyle.C")
 
-from OutreachExercise2011.DecaysToLeptons.sourcesReduced import sources
+from OutreachExercise2011.DecaysToLeptons.sources import sources
 
 # Import the Analyzer you want to run:
 # FourLeptonAnalyzer or TwoLeptonAnalyzer
@@ -36,7 +36,7 @@ analyzer.declareHistos()
 for sample in sources:
     # maxEv defines the maximum number of events to analyze
     # set it to -1 to analyze all available events; 
-    analyzer.processSample(sample, maxEv=1000)
+    analyzer.processSample(sample, maxEv=-1)
 
 #canvas2 = analyzer.stackHistos()
 canvas1 = analyzer.makeAllPlots()

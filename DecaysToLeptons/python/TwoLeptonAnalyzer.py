@@ -221,13 +221,18 @@ class TwoLeptonAnalyzer(Analyzer):
         
         #let's declare energy histo
         self.declareHisto('energy', 30, 60, 120, "energy [GeV]")
+	self.declareHisto('px', 30, 0, 120, "p_{x} [Gev]")
+	self.declareHisto('py', 30, 0, 120, "p_{y} [Gev]")
+	self.declareHisto('pz', 30, 0, 120, "p_{z} [Gev]")
 
     def fillHistos(self, box, sample, weight=1):
         super(TwoLeptonAnalyzer, self).fillHistos(box, sample, weight)
-
         self.fillHisto('massZ', sample, box.Z.l1.mass(), weight)
         self.fillHisto('pt', sample, box.Z.l1.pt(), weight)
         self.fillHisto('energy', sample, box.Z.l1.energy(), weight)
+	self.fillHisto('px', sample, box.Z.l1.px(), weight)
+	self.fillHisto('py', sample, box.Z.l1.py(), weight)
+	self.fillHisto('pz', sample, box.Z.l1.pz(), weight)
 
     def addEvent(self, box):
         self.data.append(box.Z.l1.mass())
